@@ -343,7 +343,7 @@ Element* Set_s::loop(LispE* lisp, int16_t label, List* code) {
             element->content = a;
         e = null_;
         //We then execute our instructions
-        for (i_loop = 3; i_loop < sz && e->type != l_return; i_loop++) {
+        for (i_loop = 3; i_loop < sz && e->type != l_return && e->type != l_continue; i_loop++) {
             e->release();
             e = code->liste[i_loop]->eval(lisp);
         }
@@ -913,7 +913,7 @@ Element* Set_i::loop(LispE* lisp, int16_t label, List* code) {
             element->content = a;
         e = null_;
         //We then execute our instructions
-        for (i_loop = 3; i_loop < sz && e->type != l_return; i_loop++) {
+        for (i_loop = 3; i_loop < sz && e->type != l_return && e->type != l_continue; i_loop++) {
             e->release();
             e = code->liste[i_loop]->eval(lisp);
         }
@@ -1157,7 +1157,7 @@ Element* Set_n::loop(LispE* lisp, int16_t label, List* code) {
             element->content = a;
         e = null_;
         //We then execute our instructions
-        for (i_loop = 3; i_loop < sz && e->type != l_return; i_loop++) {
+        for (i_loop = 3; i_loop < sz && e->type != l_return && e->type != l_continue; i_loop++) {
             e->release();
             e = code->liste[i_loop]->eval(lisp);
         }
@@ -1514,7 +1514,7 @@ Element* Set::loop(LispE* lisp, int16_t label, List* code) {
         lisp->replacestackvalue(element, label);
         _releasing(e);
         //We then execute our instructions
-        for (i_loop = 3; i_loop < sz && e->type != l_return; i_loop++) {
+        for (i_loop = 3; i_loop < sz && e->type != l_return && e->type != l_continue; i_loop++) {
             e->release();
             e = code->liste[i_loop]->eval(lisp);
         }
@@ -2987,7 +2987,7 @@ Element* Heap::loop(LispE* lisp, int16_t label, List* code) {
         lisp->replacestackvalue(element, label);
         _releasing(e);
         //We then execute our instructions
-        for (i_loop = 3; i_loop < sz && e->type != l_return; i_loop++) {
+        for (i_loop = 3; i_loop < sz && e->type != l_return && e->type != l_continue; i_loop++) {
             e->release();
             e = code->liste[i_loop]->eval(lisp);
         }

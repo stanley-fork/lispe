@@ -1402,6 +1402,7 @@ public:
     Element* evall_bitxorequal(LispE* lisp);
     Element* evall_block(LispE* lisp);
     Element* evall_break(LispE* lisp);
+    Element* evall_continue(LispE* lisp);
     Element* evall_cdr(LispE* lisp);
     Element* evall_compile(LispE* lisp);
     Element* evall_conspoint(LispE* lisp);
@@ -1906,6 +1907,20 @@ public:
     bool isBreak() {
         return true;
     }
+    
+    long size() {
+        return 1;
+    }
+    
+    Element* eval(LispE*) {
+        return this;
+    }
+};
+
+class Listcontinue : public Element {
+public:
+    
+    Listcontinue() : Element(l_continue, s_constant) {}
     
     long size() {
         return 1;
@@ -3205,6 +3220,34 @@ public:
     
     Element* eval(LispE* lisp);
 };
+
+class List_popvalue_eval : public Listincode {
+public:
+    
+    List_popvalue_eval(Listincode* l) : Listincode(l) {}
+    List_popvalue_eval(List* l) : Listincode(l) {}
+    List_popvalue_eval() {}
+    List_popvalue_eval(bool m)  {multiple = m;}
+    
+    bool is_straight_eval() {
+        return true;
+    }
+    
+    List* borrowing(List* e) {
+        return new List_popvalue_eval(e);
+    }
+    
+    List* cloning(Listincode* e, methodEval m) {
+        return new List_popvalue_eval(e);
+    }
+    
+    List* cloning() {
+        return new List_popvalue_eval(multiple);
+    }
+    
+    Element* eval(LispE* lisp);
+};
+
 
 class List_popfirst_eval : public Listincode {
 public:
@@ -9193,6 +9236,32 @@ public:
     
     Element* eval(LispE*);
 };
+
+class List_plus_python : public Listincode {
+public:
+    List_plus_python(Listincode* l) : Listincode(l) {}
+    List_plus_python(List* l) : Listincode(l) {
+        terminal = l->terminal;
+    }
+    List_plus_python() {}
+    bool is_straight_eval() {
+        return true;
+    }
+    
+    List* borrowing(List* e) {
+        return new List_plus_python(e);
+    }
+    
+    List* cloning(Listincode* e, methodEval m) {
+        return new List_plus_python(e);
+    }
+    
+    List* cloning() {
+        return new List_plus_python();
+    }
+    Element* eval(LispE*);
+};
+
 
 class List_plusn : public Listincode {
 public:

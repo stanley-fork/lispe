@@ -1282,7 +1282,7 @@ Element* List_loopcount_eval::eval(LispE* lisp) {
     try {
         lisp->checkState(this);
         while (counter > 0) {
-            for (long i = first; i < listsize && result->type != l_return; i++) {
+            for (long i = first; i < listsize && result->type != l_return && result->type != l_continue; i++) {
                 result->release();
                 result = liste[i]->eval(lisp);
             }
@@ -1294,6 +1294,10 @@ Element* List_loopcount_eval::eval(LispE* lisp) {
                 //this is a return, it goes back to the function call
                 return result;
             }
+
+            if (result->type == l_continue)
+                result = null_;
+
             counter--;
             if (label)
                 element->content += increment;
@@ -1333,7 +1337,7 @@ Element* List_whilein_eval::eval(LispE* lisp) {
         condition->release();
         
         while (test && element != emptyatom_) {
-            for (long i = 4; i < listsize && result->type != l_return; i++) {
+            for (long i = 4; i < listsize && result->type != l_return && result->type != l_continue; i++) {
                 result->release();
                 result = liste[i]->eval(lisp);
             }
@@ -1348,6 +1352,9 @@ Element* List_whilein_eval::eval(LispE* lisp) {
                 return result;
             }
             
+            if (result->type == l_continue)
+                result = null_;
+
             element = current_list->next_iter_exchange(lisp, iter);
             lisp->storing_variable(element, label);
             condition = liste[3]->eval(lisp);
@@ -1668,6 +1675,54 @@ Element* List_pop_eval::eval(LispE* lisp) {
     return null_;
 }
 
+Element* List_popvalue_eval::eval(LispE* lisp) {
+    Element* container = liste[1]->eval(lisp);
+    Element* e = null_;
+
+    if (liste.size() != 3) {
+        if (container->type == t_llist) {
+            e = container->car(lisp);
+            if (!e->isNULL()) {
+                e->increment();
+                container->removefirst();
+                e->decrementkeep();
+            }
+        }
+        else {
+            e = container->last(lisp);
+            if (!e->isNULL()) {
+                e->increment();
+                container->removelast();
+                e->decrementkeep();
+            }
+        }
+        container->release();
+        return e;
+    }
+
+    Element* key = null_;
+    try {
+        lisp->checkState(this);
+        key = liste[2]->eval(lisp);
+        e = container->value_on_index(lisp, key);
+        if (!e->isNULL()) {
+            e->increment();
+            container->remove(lisp, key);
+            e->decrementkeep();
+        }
+        key->release();
+        container->release();
+    }
+    catch (Error* err) {
+        key->release();
+        container->release();
+        return lisp->check_error(this, err, idxinfo);
+    }
+    
+    lisp->resetStack();
+    return e;
+}
+
 
 Element* List_popfirst_eval::eval(LispE* lisp) {
     try {
@@ -1832,7 +1887,7 @@ Element* List_while_eval::eval(LispE* lisp) {
     try {
         lisp->checkState(this);
         while (test) {
-            for (long i = 2; i < listsize && result->type != l_return; i++) {
+            for (long i = 2; i < listsize && result->type != l_return && result->type != l_continue; i++) {
                 _releasing(result);
                 result = liste[i]->eval(lisp);
             }
@@ -1846,6 +1901,8 @@ Element* List_while_eval::eval(LispE* lisp) {
                 return result;
             }
             
+            if (result->type == l_continue)
+                result = null_;
             condition = liste[1]->eval(lisp);
             test = condition->Boolean();
             condition->release();
@@ -5666,7 +5723,7 @@ Element* List_mloop_eval::eval(LispE* lisp) {
             }
             //We then execute our instructions
             e = null_;
-            for (var = nbvars + 2; var < sz && e->type != l_return; var++) {
+            for (var = nbvars + 2; var < sz && e->type != l_return && e->type != l_continue; var++) {
                 e->release();
                 e = liste[var]->eval(lisp);
             }
@@ -5730,7 +5787,7 @@ Element* List_lloop_eval::eval(LispE* lisp) {
             }
             e = null_;
             //We then execute our instructions
-            for (var = nbvars + 2; var < sz && e->type != l_return; var++) {
+            for (var = nbvars + 2; var < sz && e->type != l_return && e->type != l_continue; var++) {
                 e->release();
                 e = liste[var]->eval(lisp);
             }

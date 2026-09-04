@@ -1153,7 +1153,7 @@ Element* Dictionary::loop(LispE* lisp, int16_t label, List* code) {
                 element->content = _keys->liste[i];
             e = null_;
             //We then execute our instructions
-            for (i_loop = 3; i_loop < sz && e->type != l_return; i_loop++) {
+            for (i_loop = 3; i_loop < sz && e->type != l_return && e->type != l_continue; i_loop++) {
                 e->release();
                 e = code->liste[i_loop]->eval(lisp);
             }
@@ -1217,7 +1217,7 @@ Element* Dictionary_json::loop(LispE* lisp, int16_t label, List* code) {
             element->content = the_keys[i];
         e = null_;
         //We then execute our instructions
-        for (i_loop = 3; i_loop < sz && e->type != l_return; i_loop++) {
+        for (i_loop = 3; i_loop < sz && e->type != l_return && e->type != l_continue; i_loop++) {
             e->release();
             e = code->liste[i_loop]->eval(lisp);
         }
@@ -1603,7 +1603,7 @@ Element* Dictionary_i::loop(LispE* lisp, int16_t label, List* code) {
                 element->content = _keys->liste[a_key];
             e = null_;
             //We then execute our instructions
-            for (i_loop = 3; i_loop < sz && e->type != l_return; i_loop++) {
+            for (i_loop = 3; i_loop < sz && e->type != l_return && e->type != l_continue; i_loop++) {
                 e->release();
                 e = code->liste[i_loop]->eval(lisp);
             }
@@ -1886,7 +1886,7 @@ Element* Dictionary_n::loop(LispE* lisp, int16_t label, List* code) {
                 element->content = _keys->liste[a_key];
             e = null_;
             //We then execute our instructions
-            for (i_loop = 3; i_loop < sz && e->type != l_return; i_loop++) {
+            for (i_loop = 3; i_loop < sz && e->type != l_return && e->type != l_continue; i_loop++) {
                 e->release();
                 e = code->liste[i_loop]->eval(lisp);
             }
@@ -2592,7 +2592,7 @@ Element* Tree::loop(LispE* lisp, int16_t label, List* code) {
                 element->content = _keys->liste[i];
             e = null_;
             //We then execute our instructions
-            for (i_loop = 3; i_loop < sz && e->type != l_return; i_loop++) {
+            for (i_loop = 3; i_loop < sz && e->type != l_return && e->type != l_continue; i_loop++) {
                 e->release();
                 e = code->liste[i_loop]->eval(lisp);
             }
@@ -2938,7 +2938,7 @@ Element* Tree_i::loop(LispE* lisp, int16_t label, List* code) {
                 element->content = _keys->liste[a_key];
             e = null_;
             //We then execute our instructions
-            for (i_loop = 3; i_loop < sz && e->type != l_return; i_loop++) {
+            for (i_loop = 3; i_loop < sz && e->type != l_return && e->type != l_continue; i_loop++) {
                 e->release();
                 e = code->liste[i_loop]->eval(lisp);
             }
@@ -3221,7 +3221,7 @@ Element* Tree_n::loop(LispE* lisp, int16_t label, List* code) {
                 element->content = _keys->liste[a_key];
             e = null_;
             //We then execute our instructions
-            for (i_loop = 3; i_loop < sz && e->type != l_return; i_loop++) {
+            for (i_loop = 3; i_loop < sz && e->type != l_return && e->type != l_continue; i_loop++) {
                 e->release();
                 e = code->liste[i_loop]->eval(lisp);
             }

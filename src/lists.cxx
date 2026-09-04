@@ -1110,7 +1110,7 @@ Element* LList::loop(LispE* lisp, int16_t label, List* code) {
         lisp->replacestackvalue(a->value, label);
         _releasing(e);
         //We then execute our instructions
-        for (i_loop = 3; i_loop < sz && e->type != l_return; i_loop++) {
+        for (i_loop = 3; i_loop < sz && e->type != l_return && e->type != l_continue; i_loop++) {
             e->release();
             e = code->liste[i_loop]->eval(lisp);
         }
@@ -1132,7 +1132,7 @@ Element* List::loop(LispE* lisp, int16_t label, List* code) {
         lisp->replacestackvalue(liste[i], label);
         _releasing(e);
         //We then execute our instructions
-        for (i_loop = 3; i_loop < sz && e->type != l_return; i_loop++) {
+        for (i_loop = 3; i_loop < sz && e->type != l_return && e->type != l_continue; i_loop++) {
             e->release();
             e = code->liste[i_loop]->eval(lisp);
         }
@@ -1157,7 +1157,7 @@ Element* Enumlist::loop(LispE* lisp, int16_t label, List* code) {
         lisp->replacestackvalue(element, label);
         _releasing(e);
         //We then execute our instructions
-        for (i_loop = 3; i_loop < sz && e->type != l_return; i_loop++) {
+        for (i_loop = 3; i_loop < sz && e->type != l_return && e->type != l_continue; i_loop++) {
             e->release();
             e = code->liste[i_loop]->eval(lisp);
         }
@@ -3525,7 +3525,7 @@ Element* Numbers::loop(LispE* lisp, int16_t label, List* code) {
             element->content = liste[i];
         e = null_;
         //We then execute our instructions
-        for (i_loop = 3; i_loop < sz && e->type != l_return; i_loop++) {
+        for (i_loop = 3; i_loop < sz && e->type != l_return && e->type != l_continue; i_loop++) {
             e->release();
             e = code->liste[i_loop]->eval(lisp);
         }
@@ -4188,7 +4188,7 @@ Element* Integers::loop(LispE* lisp, int16_t label, List* code) {
             element->content = liste[i];
         e = null_;
         //We then execute our instructions
-        for (i_loop = 3; i_loop < sz && e->type != l_return; i_loop++) {
+        for (i_loop = 3; i_loop < sz && e->type != l_return && e->type != l_continue; i_loop++) {
             e->release();
             e = code->liste[i_loop]->eval(lisp);
         }
@@ -4864,7 +4864,7 @@ Element* Strings::loop(LispE* lisp, int16_t label, List* code) {
             element->content = liste[i];
         e = null_;
         //We then execute our instructions
-        for (i_loop = 3; i_loop < sz && e->type != l_return; i_loop++) {
+        for (i_loop = 3; i_loop < sz && e->type != l_return && e->type != l_continue; i_loop++) {
             e->release();
             e = code->liste[i_loop]->eval(lisp);
         }
@@ -5878,7 +5878,7 @@ Element* Stringbytes::loop(LispE* lisp, int16_t label, List* code) {
             element->content = liste[i];
         e = null_;
         //We then execute our instructions
-        for (i_loop = 3; i_loop < sz && e->type != l_return; i_loop++) {
+        for (i_loop = 3; i_loop < sz && e->type != l_return && e->type != l_continue; i_loop++) {
             e->release();
             e = code->liste[i_loop]->eval(lisp);
         }
@@ -7038,7 +7038,7 @@ Element* Shorts::loop(LispE* lisp, int16_t label, List* code) {
             element->content = liste[i];
         e = null_;
         //We then execute our instructions
-        for (i_loop = 3; i_loop < sz && e->type != l_return; i_loop++) {
+        for (i_loop = 3; i_loop < sz && e->type != l_return && e->type != l_continue; i_loop++) {
             e->release();
             e = code->liste[i_loop]->eval(lisp);
         }
@@ -7720,7 +7720,7 @@ Element* Floats::loop(LispE* lisp, int16_t label, List* code) {
             element->content = liste[i];
         e = null_;
         //We then execute our instructions
-        for (i_loop = 3; i_loop < sz && e->type != l_return; i_loop++) {
+        for (i_loop = 3; i_loop < sz && e->type != l_return && e->type != l_continue; i_loop++) {
             e->release();
             e = code->liste[i_loop]->eval(lisp);
         }

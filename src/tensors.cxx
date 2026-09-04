@@ -1174,7 +1174,7 @@ template <typename A, lisp_code T, lisp_code TT, typename C> Element* Matrice<A,
         lisp->replacestackvalue(liste[i], label);
         _releasing(e);
         //We then execute our instructions
-        for (i_loop = 3; i_loop < sz && e->type != l_return; i_loop++) {
+        for (i_loop = 3; i_loop < sz && e->type != l_return && e->type != l_continue; i_loop++) {
             e->release();
             e = code->liste[i_loop]->eval(lisp);
         }
@@ -1828,7 +1828,7 @@ template <typename A, lisp_code T, typename C> Element* Tenseur<A,T,C>::loop(Lis
         lisp->replacestackvalue(liste[i], label);
         _releasing(e);
         //We then execute our instructions
-        for (i_loop = 3; i_loop < sz && e->type != l_return; i_loop++) {
+        for (i_loop = 3; i_loop < sz && e->type != l_return && e->type != l_continue; i_loop++) {
             e->release();
             e = code->liste[i_loop]->eval(lisp);
         }

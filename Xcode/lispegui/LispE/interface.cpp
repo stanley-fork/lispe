@@ -448,7 +448,7 @@ public:
         
         //Strings
         rules.push_back(U"\"\"\"?*\"\"\"=:34");
-        rules.push_back(U"\"{[\\-\"] ~%r}*\"=:34");     //string "" does not contain CR and can escape characters
+        rules.push_back(U"\"{[\\-\"] [\\\\] ~%r}*\"=:34");     //string "" does not contain CR and can escape characters
         rules.push_back(U"`?*`=:34");                   //long strings Unix way
         rules.push_back(U"«?*»=:34");                   //long strings French way
         rules.push_back(U"“?*”=:34");                   //long strings English

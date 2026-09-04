@@ -627,6 +627,15 @@ Element* List::evall_break(LispE* lisp) {
     return break_;
 }
 
+Element* List::evall_continue(LispE* lisp) {
+    int idx = infoIdx();
+    if (idx) {
+        lisp->checkState((Listincode*)this);
+        lisp->resetStack();
+    }
+    return lisp->delegation->_CONTINUE;
+}
+
 Element* List::eval_error(LispE* lisp) {
     if (liste.is_not_empty()) {
         wstring msg = L"Error: unknown instruction: '";

@@ -6116,6 +6116,54 @@ Element* List::evall_plus(LispE* lisp) {
     return first_element;
 }
 
+Element* List_plus_python::eval(LispE* lisp) {
+    Element* first_element = liste[1]->eval(lisp);
+    first_element = first_element->copyatom(lisp, 1);
+    
+    int16_t listsize = liste.size();
+    Element* second_element = null_;
+    bool concatenate = first_element->isList();
+    if (concatenate) {
+        first_element = first_element->duplicate_constant(lisp);
+    }
+        
+    
+    try {
+        long l;
+        Element* e;
+        lisp->checkState(this);
+        for (long i = 2; i < listsize; i++) {
+            second_element = liste[i]->eval(lisp);
+            if (concatenate) {
+                if (second_element->isList()) {
+                    for (l = 0; l < second_element->size(); l++) {
+                        e = second_element->value_on_index(lisp, l);
+                        first_element->append(e);
+                        e->release();
+                    }
+                }
+                else
+                    first_element->append(second_element);
+            }
+            else
+                first_element = first_element->plus_direct(lisp, second_element);
+            if (first_element != second_element)
+                _releasing(second_element);
+        }
+    }
+    catch (Error* err) {
+        if (first_element != second_element)
+            second_element->release();
+        first_element->release();
+        lisp->resetStack();
+        return lisp->check_error(this, err, idxinfo);
+    }
+    
+    lisp->resetStack();
+    return first_element;
+}
+
+
 Element* List_plusn::eval(LispE* lisp) {
     Element* first_element = liste[1]->eval(lisp);
     first_element = first_element->copyatom(lisp, 1);

@@ -31,7 +31,7 @@ void decrement_total() {
     total_objects--;
 }
 
-static std::string version = "1.2026.8.20.11.3";
+static std::string version = "1.2026.9.1.10.1";
 string LispVersion() {
     return version;
 }
@@ -314,6 +314,7 @@ Delegation::~Delegation() {
     delete _EMPTYLIST;
     delete _EMPTYDICTIONARY;
     delete _BREAK;
+    delete _CONTINUE;
     delete _THEEND;
     
 }
@@ -428,6 +429,7 @@ void Delegation::initialisation(LispE* lisp) {
     set_instruction(l_block, "block", P_ATLEASTONE, &List::evall_block, new List_block_eval());
     set_instruction(l_bodies, "bodies", P_TWO,  new List_bodies_eval());
     set_instruction(l_break, "break", P_ONE, &List::evall_break);
+    set_instruction(l_continue, "continue", P_ONE, &List::evall_continue);
     set_instruction(l_cadr, "cadr", P_TWO,  new List_cadr_eval());
     set_instruction(l_car, "car", P_TWO,  new List_car_eval());
     set_instruction(l_catch, "catch", P_ATLEASTTWO,  new List_catch_eval());
@@ -590,9 +592,11 @@ void Delegation::initialisation(LispE* lisp) {
     set_instruction(l_pattern, "pattern@", P_THREE,  new List_extractpattern_eval());
     set_instruction(l_pipe, "pipe", P_ONE,  new List_pipe_eval());
     set_instruction(l_plus, "+", P_ATLEASTTWO,  &List::evall_plus, new List_plusn());
+    set_instruction(l_pluspython, "p+", P_ATLEASTTWO,  new List_plus_python());
     set_instruction(l_plusequal, "+=", P_ATLEASTTHREE, &List::evall_plusequal);
     set_instruction(l_plusmultiply, "+*", P_FIVE,  new List_plusmultiply());
     set_instruction(l_pop, "pop", P_TWO | P_THREE,  new List_pop_eval());
+    set_instruction(l_popvalue, "popvalue", P_TWO | P_THREE,  new List_popvalue_eval());
     set_instruction(l_popfirst, "popfirst", P_TWO,  new List_popfirst_eval());
     set_instruction(l_poplast, "poplast", P_TWO,  new List_poplast_eval());
     set_instruction(l_power, "^^", P_ATLEASTTWO, &List::evall_power);
@@ -741,6 +745,7 @@ void Delegation::initialisation(LispE* lisp) {
     operators[l_bitor] = true;
     operators[l_bitxor] = true;
     operators[l_plus] = true;
+    operators[l_pluspython] = true;
     operators[l_minus_plus] = true;
     operators[l_minus] = true;
     operators[l_multiply] = true;
@@ -956,6 +961,7 @@ void Delegation::initialisation(LispE* lisp) {
 
     _BREAK = new Listbreak;
 
+    _CONTINUE = new Listcontinue;
     
     //rest separator in a pattern matching operation
     u_ustring w = U"$";
@@ -3841,6 +3847,8 @@ Element* LispE::size() {
 Element* List::evall_memory(LispE* lisp) {
     return lisp->size();
 }
+
+
 
 
 

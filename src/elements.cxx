@@ -1280,7 +1280,7 @@ Element* String::loop(LispE* lisp, int16_t label, List* code) {
             element->content = localvalue;
         e = null_;
         //We then execute our instructions
-        for (i_loop = 3; i_loop < sz && e->type != l_return; i_loop++) {
+        for (i_loop = 3; i_loop < sz && e->type != l_return && e->type != l_continue; i_loop++) {
             e->release();
             e = code->liste[i_loop]->eval(lisp);
         }
@@ -1321,7 +1321,7 @@ Element* Stringbyte::loop(LispE* lisp, int16_t label, List* code) {
             element->content = localvalue;
         e = null_;
         //We then execute our instructions
-        for (i_loop = 3; i_loop < sz && e->type != l_return; i_loop++) {
+        for (i_loop = 3; i_loop < sz && e->type != l_return && e->type != l_continue; i_loop++) {
             e->release();
             e = code->liste[i_loop]->eval(lisp);
         }
@@ -1391,7 +1391,7 @@ Element* Rankloop::loop(LispE* lisp, int16_t label, List* code) {
         lisp->replacestackvalue(ranks, label);
         _releasing(e);
         //We then execute our instructions
-        for (i_loop = 3; i_loop < sz && e->type != l_return; i_loop++) {
+        for (i_loop = 3; i_loop < sz && e->type != l_return && e->type != l_continue; i_loop++) {
             e->release();
             e = code->liste[i_loop]->eval(lisp);
         }
@@ -1543,7 +1543,7 @@ Element* Cyclelist::loop(LispE* lisp, int16_t label, List* code) {
         _releasing(e);
         if ((++i) >= sze)
             i = 0;
-        for (i_loop = 3; i_loop < sz && e->type != l_return; i_loop++) {
+        for (i_loop = 3; i_loop < sz && e->type != l_return && e->type != l_continue; i_loop++) {
             e->release();
             e = code->liste[i_loop]->eval(lisp);
         }

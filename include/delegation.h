@@ -216,6 +216,7 @@ public:
     Atome* _QUOTE;
     Atome* _SET_AT;
     Element* _BREAK;
+    Element* _CONTINUE;
     Listbreak _BREAKEVAL;
     
     List* _EMPTYLIST;

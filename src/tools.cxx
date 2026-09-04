@@ -7543,8 +7543,8 @@ void tokenizer_automaton::setrules() {
 
     //Strings
     rules.push_back(U"\"\"\"?*\"\"\"=:96");                   //long strings Python way """.."""
-    rules.push_back(U"\"{[\\-\"] ~%r}*\"=:34");     //string "" does not contain CR and can escape characters
-    rules.push_back(U"b\"{[\\-\"] ~%r}*\"=:34");     //string "" does not contain CR and can escape characters
+    rules.push_back(U"\"{[\\-\"] [\\\\] ~%r}*\"=:34");     //string "" does not contain CR and can escape characters
+    rules.push_back(U"b\"{[\\-\"] [\\\\] ~%r}*\"=:34");     //string "" does not contain CR and can escape characters
     rules.push_back(U"j`?*`=:106");                   //long strings JS way (btoa inside)
     rules.push_back(U"`?*`=:96");                   //long strings Unix way
     rules.push_back(U"b`?*`=:96");                   //long strings Unix way

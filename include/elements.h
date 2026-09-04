@@ -97,7 +97,7 @@ typedef enum {
     l_quote, l_quoted, l_emptylist,
     //Numerical operations
     l_sign, l_signp, l_minus_plus,
-    l_plus, l_minus, l_multiply, l_divide,
+    l_plus, l_minus, l_multiply, l_divide, l_pluspython,
     l_leftshift, l_rightshift,
     l_bitand, l_bitor, l_bitxor, l_bitandnot,
     l_bitnot, l_power, l_mod,
@@ -126,7 +126,7 @@ typedef enum {
     l_bread, l_bwrite, l_bappend,
     
     //mutable operations
-    l_key, l_keyn, l_keyi, l_keys, l_values, l_pop, l_popfirst, l_poplast,
+    l_key, l_keyn, l_keyi, l_keys, l_values, l_pop, l_popfirst, l_poplast, l_popvalue,
     l_to_list, l_to_llist, l_to_tensor, l_list, l_llist, l_heap, l_cons, l_consb, l_conspoint, l_flatten, l_nconc, l_nconcn,
     l_pushtrue, l_push, l_pushfirst, l_pushlast, l_insert, l_extend,
     l_unique, l_clone, l_rotate,
@@ -141,7 +141,7 @@ typedef enum {
     l_mark, l_resetmark,
     l_while, l_loop, l_loopcount, l_range, l_rangein, l_irange, l_irangein, l_mloop, l_lloop,
     l_atoms, l_atomise, l_join, l_sort, l_whilein,
-    l_compile, l_load, l_input, l_getchar, l_pipe, l_type,  l_return, l_break, l_reverse,
+    l_compile, l_load, l_input, l_getchar, l_pipe, l_type,  l_return, l_break, l_continue, l_reverse,
     l_apply, l_over, l_slice, l_shift,
     l_maplist, l_filterlist, l_droplist, l_takelist, l_takenb, l_scanlist,
     l_mapcar, l_filtercar, l_dropcar, l_takecar,
