@@ -2756,7 +2756,7 @@ public:
         content = c;
     }
 
-    Element* duplicate_constant(LispE* lisp);
+    virtual Element* duplicate_constant(LispE* lisp);
 
     Element* asList(LispE* lisp, List* l);
     
@@ -3004,6 +3004,8 @@ public:
         return new Longstring(content);
     }
 
+    Element* duplicate_constant(LispE* lisp);
+    
     // There is a difference between the two copies
     //The first one makes a final copy
     virtual Element* copying(bool duplicate = true) {

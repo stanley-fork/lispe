@@ -161,7 +161,7 @@ wstring convertToWString(double d) {
     long i = p;
     while (p) {
         p--;
-        if (buff[p] > '9' || buff[p] < '0')
+        if (buff[p] == '.' || (buff[p] -32) == 'E')
             return buff;
     }
     buff[i] = '.';
@@ -176,7 +176,7 @@ string convertToString(double d) {
     long i = p;
     while (p) {
         p--;
-        if (buff[p] > '9' || buff[p] < '0')
+        if (buff[p] == '.' || (buff[p] -32) == 'E')
             return buff;
     }
     buff[i] = '.';
@@ -195,7 +195,7 @@ wstring convertToWString(float d) {
     long i = p;
     while (p) {
         p--;
-        if (buff[p] > '9' || buff[p] < '0')
+        if (buff[p] == '.' || (buff[p] -32) == 'E')
             return buff;
     }
     buff[i] = '.';
@@ -210,7 +210,7 @@ string convertToString(float d) {
     long i = p;
     while (p) {
         p--;
-        if (buff[p] > '9' || buff[p] < '0')
+        if (buff[p] == '.' || (buff[p] -32) == 'E')
             return buff;
     }
     buff[i] = '.';

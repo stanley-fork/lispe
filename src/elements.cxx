@@ -142,31 +142,35 @@ Element* String::chargebin(LispE* lisp, string chemin) {
     
 //------------------------------------------------------------------------------------------
 Element* Float::duplicate_constant(LispE* lisp) {
-    return status!=s_constant?this:lisp->provideFloat(content);
+    return !status?this:lisp->provideFloat(content);
 }
 
 Element* Number::duplicate_constant(LispE* lisp) {
-    return status!=s_constant?this:lisp->provideNumber(content);
+    return !status?this:lisp->provideNumber(content);
 }
 
 Element* Short::duplicate_constant(LispE* lisp) {
-    return status!=s_constant?this:lisp->provideShort(content);
+    return !status?this:lisp->provideShort(content);
 }
 
 Element* Complexe::duplicate_constant(LispE* lisp) {
-    return status!=s_constant?this:lisp->provideComplex(content);
+    return !status?this:lisp->provideComplex(content);
 }
 
 Element* Integer::duplicate_constant(LispE* lisp) {
-    return status!=s_constant?this:lisp->provideInteger(content);
+    return !status?this:lisp->provideInteger(content);
 }
 
 Element* String::duplicate_constant(LispE* lisp) {
-    return status!=s_constant?this:lisp->provideString(content);
+    return !status?this:lisp->provideString(content);
+}
+
+Element* Longstring::duplicate_constant(LispE* lisp) {
+    return !status?this:new Longstring(content);
 }
 
 Element* Stringbyte::duplicate_constant(LispE* lisp) {
-    return status!=s_constant?this:new Stringbyte(content);
+    return !status?this:new Stringbyte(content);
 }
 
 //------------------------------------------------------------------------------------------

@@ -284,7 +284,24 @@ public:
     inline bool equal(LIST& l) {
         return ((items->last == 0 && l.items->last == 0) || (l.items == items && home == l.home));
     }
-    
+
+    inline bool isequal(LispE* lisp, LIST& l) {
+        if ((items->last == 0 && l.items->last == 0) || l.items == items) {
+            if (l.items == items && l.home != home)
+                return false;
+            return true;
+        }
+        
+        long sz = size();
+        if (sz != l.size())
+            return false;
+        for (long i = 0; i < sz; i++) {
+            if (!at(i)->isequal(lisp, l.at(i)))
+                return false;
+        }
+        return true;
+    }
+
     inline void reserve(long sz) {
         items->reserve(sz);
     }

@@ -2089,11 +2089,11 @@ Element* List::newInstance(Element* e) {
 }
 
 Element* List::equal(LispE* lisp, Element* e) {
-    return booleans_[e->isList() && liste.equal(((List*)e)->liste)];
+    return booleans_[e->isList() && liste.isequal(lisp, ((List*)e)->liste)];
 }
 
 Element* LList::equal(LispE* lisp, Element* e) {
-    return booleans_[((e->type == t_llist && e->size() == 0 && liste.empty()) || e == this)];
+    return booleans_[e->type == t_llist && e->isequal(lisp, e)];
 }
 
 bool List::egal(Element* e) {
