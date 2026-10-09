@@ -55,8 +55,10 @@ string eval_js(string code, bool& error) {
     char* errorStr = (char*)EM_ASM_PTR({
         if (window._lispeJsEvalError) {
             var errorStr = window._lispeJsEvalError;
-            var buffer = Module._malloc(errorStr.length + 1);
-            stringToUTF8(errorStr, buffer, errorStr.length + 1);
+            // UTF-8 needs up to 4 bytes per character: size the buffer in bytes, not in characters
+            var size = lengthBytesUTF8(errorStr) + 1;
+            var buffer = Module._malloc(size);
+            stringToUTF8(errorStr, buffer, size);
             return buffer;
         }
         return 0;
@@ -78,8 +80,10 @@ string eval_js(string code, bool& error) {
         } catch(e) {
             jsString = "";
         }
-        var buffer = Module._malloc(jsString.length + 1);
-        stringToUTF8(jsString, buffer, jsString.length + 1);
+        // UTF-8 needs up to 4 bytes per character: size the buffer in bytes, not in characters
+        var size = lengthBytesUTF8(jsString) + 1;
+        var buffer = Module._malloc(size);
+        stringToUTF8(jsString, buffer, size);
         return buffer;
     });
 
@@ -153,14 +157,18 @@ void eval_js_async(LispE* lisp, string& code, List* recall) {
             }
             
             // Store result in Lisp
-            var buffer = Module._malloc(resultString.length + 1);
-            stringToUTF8(resultString, buffer, resultString.length + 1);
+            // UTF-8 needs up to 4 bytes per character: size the buffer in bytes, not in characters
+            var size = lengthBytesUTF8(resultString) + 1;
+            var buffer = Module._malloc(size);
+            stringToUTF8(resultString, buffer, size);
             _store_in_lisp($1, $2, buffer, false);
             Module._free(buffer);
         } catch (error) {            
             const errorStr = error.toString();
-            var buffer = Module._malloc(errorStr.length + 1);
-            stringToUTF8(errorStr, buffer, errorStr.length + 1);
+            // UTF-8 needs up to 4 bytes per character: size the buffer in bytes, not in characters
+            var size = lengthBytesUTF8(errorStr) + 1;
+            var buffer = Module._malloc(size);
+            stringToUTF8(errorStr, buffer, size);
             _store_in_lisp($1, $2, buffer, true);
             Module._free(buffer);
         }})();

@@ -1380,8 +1380,9 @@ Element* List_ncheck_eval::eval(LispE* lisp) {
         
         if (!element->Boolean()) {
             element->release();
+            element = liste[2]->eval_terminal(lisp, terminal);
             lisp->resetStack();
-            return liste[2]->eval_terminal(lisp, terminal);
+            return element;
         }
         
         
@@ -7135,8 +7136,11 @@ Element* List_ife_eval::eval(LispE* lisp) {
         char test = res->Boolean();
         res->release();
 
-        if (test)
-            return liste[2]->eval_terminal(lisp, terminal);
+        if (test) {
+            res = liste[2]->eval_terminal(lisp, terminal);
+            lisp->resetStack();
+            return res;
+        }
         
         long listsize = liste.size();
         liste.back()->setterminal(terminal);

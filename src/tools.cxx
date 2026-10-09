@@ -157,13 +157,31 @@ u_ustring convertToUString(long d) {
 
 wstring convertToWString(double d) {
     wchar_t buff[20];
-    swprintf_s(buff, 20, L"%g", d);
+    long p = swprintf_s(buff, 20, L"%g", d);
+    long i = p;
+    while (p) {
+        p--;
+        if (buff[p] > '9' || buff[p] < '0')
+            return buff;
+    }
+    buff[i] = '.';
+    buff[i+1] = '0';
+    buff[i+2] = 0;
     return buff;
 }
 
 string convertToString(double d) {
     char buff[20];
-    sprintf_s(buff, 20, "%g", d);
+    long p = sprintf_s(buff, 20, "%g", d);
+    long i = p;
+    while (p) {
+        p--;
+        if (buff[p] > '9' || buff[p] < '0')
+            return buff;
+    }
+    buff[i] = '.';
+    buff[i+1] = '0';
+    buff[i+2] = 0;
     return buff;
 }
 
@@ -173,13 +191,31 @@ u_ustring convertToUString(double d) {
 
 wstring convertToWString(float d) {
     wchar_t buff[20];
-    swprintf_s(buff, 20, L"%g", d);
+    long p = swprintf_s(buff, 20, L"%g", d);
+    long i = p;
+    while (p) {
+        p--;
+        if (buff[p] > '9' || buff[p] < '0')
+            return buff;
+    }
+    buff[i] = '.';
+    buff[i+1] = '0';
+    buff[i+2] = 0;
     return buff;
 }
 
 string convertToString(float d) {
     char buff[20];
-    sprintf_s(buff, 20, "%g", d);
+    long p = sprintf_s(buff, 20, "%g", d);
+    long i = p;
+    while (p) {
+        p--;
+        if (buff[p] > '9' || buff[p] < '0')
+            return buff;
+    }
+    buff[i] = '.';
+    buff[i+1] = '0';
+    buff[i+2] = 0;
     return buff;
 }
 

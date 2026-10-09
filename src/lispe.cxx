@@ -33,7 +33,7 @@ void decrement_total() {
     total_objects--;
 }
 
-static std::string version = "1.2026.10.3.13.9";
+static std::string version = "1.2026.10.9.11.5";
 string LispVersion() {
     return version;
 }
@@ -1305,10 +1305,10 @@ void Delegation::initialisation(LispE* lisp) {
     moduleMaths(lisp);
     moduleAleatoire(lisp);
     moduleRGX(lisp);
+    moduleOntology(lisp);
 #ifndef LISPE_WASM
     moduleSocket(lisp);
 #endif
-    moduleOntology(lisp);
 #ifdef FLTKGUI
     moduleGUI(lisp);
 #endif
@@ -3880,6 +3880,7 @@ Element* LispE::size() {
 Element* List::evall_memory(LispE* lisp) {
     return lisp->size();
 }
+
 
 
 
